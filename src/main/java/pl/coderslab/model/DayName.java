@@ -8,8 +8,7 @@ public class DayName {
     public DayName() {
     }
 
-    public DayName(int id, String name, int displayOrder) {
-        this.id = id;
+    public DayName(String name, int displayOrder) {
         this.name = name;
         this.displayOrder = displayOrder;
     }
