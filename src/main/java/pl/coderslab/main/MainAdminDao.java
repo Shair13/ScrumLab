@@ -1,5 +1,6 @@
-package pl.coderslab.dao;
+package pl.coderslab.main;
 
+import pl.coderslab.dao.AdminDao;
 import pl.coderslab.model.Admin;
 
 import javax.servlet.*;

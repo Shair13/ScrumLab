@@ -1,5 +1,6 @@
-package pl.coderslab.dao;
+package pl.coderslab.main;
 
+import pl.coderslab.dao.PlanDao;
 import pl.coderslab.model.Plan;
 
 import javax.servlet.*;
