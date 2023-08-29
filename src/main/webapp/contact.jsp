@@ -9,10 +9,44 @@
 <%@ include file="head.jsp" %>
 <%@ include file="header.jsp" %>
 <h1>Lorem Ipsum</h1>
-<p>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-  aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-  sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-</p>
+<section class="newsletter-section padding-small">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1>Lorem ipsum dolor sie amet</h1>
+      </div>
+      <div class="col-5">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control border-0 rounded-0" placeholder=""
+                 aria-label="Recipient's username" aria-describedby="basic-addon2">
+          <div class="input-group-append">
+            <button class="input-group-text btn-color border-0 rounded-0" type="submit" id="basic-addon2">
+              <a href="index.html">Lorem</a>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="padding-medium story bg-light" id="about">
+  <div class="container d-flex justify-content-center align-items-center">
+    <div class="row">
+      <div class="col-4 mr-4">
+        <div class="div-img">
+        </div>
+      </div>
+
+      <div class="col-7 ml-4">
+        <h1 class="pb-1">Lorem ipsum dolor sit amet</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at porttitor sem. Aliquam erat
+          volutpat. Donec placerat nisl magna, et faucibus arcu condimentum sed. Lorem ipsum dolor sit
+          amet, consectetur adipiscing elit. Aliquam at porttitor sem. Aliquam erat volutpat. Donec
+          placerat nisl magna, et faucibus arcu condimentum sed.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 <%@ include file="footer.jsp" %>
