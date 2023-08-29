@@ -97,10 +97,10 @@ public class PlanDao {
         ) {
             preStmt.setInt(1, planId);
             preStmt.executeUpdate();
-            boolean deleted = preStmt.execute();
-            if (!deleted) {
-                throw new NotFoundException("Product not found");
-            }
+//            boolean deleted = preStmt.execute();
+//            if (!deleted) {
+//                throw new NotFoundException("Product not found");
+//            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
