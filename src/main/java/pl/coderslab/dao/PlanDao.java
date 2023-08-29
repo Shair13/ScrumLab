@@ -1,4 +1,5 @@
 package pl.coderslab.dao;
+import pl.coderslab.model.Plan;
 import pl.coderslab.utils.DbUtil;
 
 import java.sql.*;

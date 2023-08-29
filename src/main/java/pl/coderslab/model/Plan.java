@@ -1,4 +1,4 @@
-package pl.coderslab.dao;
+package pl.coderslab.model;
 
 import java.sql.Timestamp;
 

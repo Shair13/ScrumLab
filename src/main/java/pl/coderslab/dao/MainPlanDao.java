@@ -1,5 +1,7 @@
 package pl.coderslab.dao;
 
+import pl.coderslab.model.Plan;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
