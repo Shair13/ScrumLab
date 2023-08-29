@@ -134,7 +134,7 @@ public class DayNameDao {
                 DayName dayNameToAdd = new DayName();
                 dayNameToAdd.setId(resultSet.getInt("id"));
                 dayNameToAdd.setName(resultSet.getString("name"));
-                dayNameToAdd.setDisplayOrder(resultSet.getInt("author"));
+                dayNameToAdd.setDisplayOrder(resultSet.getInt("display_order"));
                 dayNameList.add(dayNameToAdd);
             }
         } catch (SQLException e) {
