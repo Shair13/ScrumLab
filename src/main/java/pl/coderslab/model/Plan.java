@@ -1,31 +1,25 @@
 package pl.coderslab.model;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 public class Plan {
     private int id;
     private String name;
     private String description;
-    private LocalDate created;
+    private Timestamp created;
     private int adminId;
 
     public Plan() {
     }
 
-    public Plan(String name, String description, LocalDate datetime, int adminId) {
+    public Plan(String name, String description, Timestamp datetime, int adminId) {
         this.name = name;
         this.description = description;
         this.created = datetime;
         this.adminId = adminId;
     }
 
-    public Plan(int id, String name, String description, LocalDate datetime, int adminId) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.created = datetime;
-        this.adminId = adminId;
-    }
 
     public int getId() {
         return id;
@@ -51,11 +45,11 @@ public class Plan {
         this.description = description;
     }
 
-    public LocalDate getCreated() {
+    public Timestamp getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDate datetime) {
+    public void setCreated(Timestamp datetime) {
         this.created = datetime;
     }
 

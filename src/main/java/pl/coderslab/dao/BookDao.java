@@ -87,7 +87,6 @@ public class BookDao {
             insertStm.setString(2, book.getAuthor());
             insertStm.setString(3, book.getIsbn());
             int result = insertStm.executeUpdate();
-
             if (result != 1) {
                 throw new RuntimeException("Execute update returned " + result);
             }
@@ -99,7 +98,6 @@ public class BookDao {
                 } else {
                     throw new RuntimeException("Generated key was not found");
                 }
-
             }
         } catch (Exception e) {
             e.printStackTrace();
