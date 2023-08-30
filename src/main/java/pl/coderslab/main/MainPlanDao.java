@@ -9,6 +9,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(value = "/mainPlanDao")
@@ -37,21 +38,22 @@ public class MainPlanDao extends HttpServlet {
         readPlan.setCreated(currentDate);
         readPlan.setAdminId(2);
         planDao.update(readPlan);
-        writer.append(readPlan.toString()).append("<br>");
         writer.append("<br>");
 
 //        Odczytaj wszystko
-        List<Plan> planList = planDao.findAll();;
+        List<Plan> planList = new ArrayList<>();
+        planList = planDao.findAll();
         for (Plan plan : planList) {
             writer.append(plan.toString()).append("<br>");
         }
         writer.append("<br>");
-//
+
 //        Usuń
         planDao.delete(planId);
+        writer.append("<br>");
 
 //        Odczytaj wszystko po usunięciu
-        planList = planDao.findAll();;
+        planList = planDao.findAll();
         for (Plan plan : planList) {
             writer.append(plan.toString()).append("<br>");
         }

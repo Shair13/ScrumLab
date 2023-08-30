@@ -1,6 +1,7 @@
 package pl.coderslab.model;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 public class Plan {
     private int id;
@@ -19,13 +20,6 @@ public class Plan {
         this.adminId = adminId;
     }
 
-    public Plan(int id, String name, String description, Timestamp datetime, int adminId) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.created = datetime;
-        this.adminId = adminId;
-    }
 
     public int getId() {
         return id;

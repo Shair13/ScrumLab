@@ -1,8 +1,14 @@
 package pl.coderslab.dao;
+
+import pl.coderslab.exception.NotFoundException;
 import pl.coderslab.model.Plan;
 import pl.coderslab.utils.DbUtil;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,39 +27,24 @@ public class PlanDao {
     public Plan createPlan(Plan plan) {
         try (Connection conn = DbUtil.getConnection();
              PreparedStatement preStmt = conn.prepareStatement(CREATE_PLAN_QUERY,
-                     PreparedStatement.RETURN_GENERATED_KEYS)) {
+                     PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
             preStmt.setString(1, plan.getName());
             preStmt.setString(2, plan.getDescription());
             preStmt.setTimestamp(3, plan.getCreated());
             preStmt.setInt(4, plan.getAdminId());
-            preStmt.executeUpdate();
-            //Pobieramy wstawiony do bazy identyfikator, a następnie ustawiamy id obiektu plan.
-            ResultSet resultSet = preStmt.getGeneratedKeys();
-            if (resultSet.next()) {
-                plan.setId(resultSet.getInt(1));
+            int result = preStmt.executeUpdate();
+            if (result != 1) {
+                throw new RuntimeException("Execute update returned " + result);
             }
-            return plan;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return plan;
-        }
-    }
 
-    public Plan readPlan(int planId) {
-        try (Connection conn = DbUtil.getConnection();
-             PreparedStatement preStmt = conn.prepareStatement(READ_PLAN_QUERY);) {
-
-            preStmt.setString(1, Integer.toString(planId));
-            ResultSet resultSet = preStmt.executeQuery();
-
-            if (resultSet.next()) {
-                Plan plan = new Plan();
-                plan.setId(resultSet.getInt(1));
-                plan.setName(resultSet.getString(2));
-                plan.setDescription(resultSet.getString(3));
-                plan.setCreated(resultSet.getTimestamp(4));
-                plan.setAdminId(resultSet.getInt(5));
-                return plan;
+            try (ResultSet resultSet = preStmt.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    plan.setId(resultSet.getInt(1));
+                    return plan;
+                } else {
+                    throw new RuntimeException("Generated key was not found");
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -61,14 +52,38 @@ public class PlanDao {
         return null;
     }
 
+    public Plan readPlan(int planId) {
+        Plan plan = new Plan();
+        try (Connection conn = DbUtil.getConnection();
+             PreparedStatement preStmt = conn.prepareStatement(READ_PLAN_QUERY)
+        ) {
+            preStmt.setInt(1, planId);
+
+            try(ResultSet resultSet = preStmt.executeQuery()){
+                if (resultSet.next()) {
+                    plan.setId(resultSet.getInt(1));
+                    plan.setName(resultSet.getString(2));
+                    plan.setDescription(resultSet.getString(3));
+                    plan.setCreated(resultSet.getTimestamp(4));
+                    plan.setAdminId(resultSet.getInt(5));
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return plan;
+    }
+
     public void update(Plan plan) {
         try (Connection conn = DbUtil.getConnection();
-             PreparedStatement preStmt = conn.prepareStatement(UPDATE_PLAN_QUERY)) {
+             PreparedStatement preStmt = conn.prepareStatement(UPDATE_PLAN_QUERY)
+        ) {
 
             preStmt.setString(1, plan.getName());
             preStmt.setString(2, plan.getDescription());
             preStmt.setTimestamp(3, plan.getCreated());
-            preStmt.setInt(4, plan.getAdminId());
+            preStmt.setInt(4, plan.getId());
             preStmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -78,9 +93,14 @@ public class PlanDao {
 
     public void delete(int planId) {
         try (Connection conn = DbUtil.getConnection();
-             PreparedStatement preStmt = conn.prepareStatement(DELETE_PLAN_QUERY)) {
-            preStmt.setString(1, Integer.toString(planId));
+             PreparedStatement preStmt = conn.prepareStatement(DELETE_PLAN_QUERY)
+        ) {
+            preStmt.setInt(1, planId);
             preStmt.executeUpdate();
+//            boolean deleted = preStmt.execute();
+//            if (!deleted) {
+//                throw new NotFoundException("Product not found");
+//            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -88,8 +108,8 @@ public class PlanDao {
 
     public List<Plan> findAll() {
         List<Plan> planList = new ArrayList<>();
-        try (Connection conn = DbUtil.getConnection();
-             PreparedStatement preStmt = conn.prepareStatement(FIND_ALL_PLAN_QUERY);) {
+        try (Connection conn = DbUtil.getConnection()) {
+            PreparedStatement preStmt = conn.prepareStatement(FIND_ALL_PLAN_QUERY);
             ResultSet rs = preStmt.executeQuery();
 
             while (rs.next()) {
@@ -101,10 +121,10 @@ public class PlanDao {
                 planToAdd.setAdminId(rs.getInt("admin_id"));
                 planList.add(planToAdd);
             }
-            return planList;
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return planList;
     }
 }

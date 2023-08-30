@@ -26,6 +26,7 @@ public class MainAdminDao extends HttpServlet {
         Admin createAdmin = adminDao.create(newAdmin);
         int adminId = createAdmin.getId();
 
+
 //        Odczyaj dane admina
         Admin readAdmin = adminDao.read(adminId);
         writer.append(readAdmin.toString()).append("<br>");
@@ -47,6 +48,7 @@ public class MainAdminDao extends HttpServlet {
         writer.append("<br>");
 
 //        Usuń admina
+        writer.append(adminId + "").append("<br>");
         adminDao.delete(adminId);
 
 //        Odczytaj wszystkich adminów po usunięciu
