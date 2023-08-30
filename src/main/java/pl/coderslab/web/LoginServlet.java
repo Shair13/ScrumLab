@@ -27,7 +27,8 @@ public class LoginServlet extends HttpServlet {
             AdminDao adminDao = new AdminDao();
             Admin user = adminDao.readByEmail(email);
 
-            if (user != null && password.equals(user.getPassword())) { //Tutaj trzeba będzie dodać szyfrowanie
+
+            if (user != null && adminDao.checkPassword(password, user.getPassword())) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
                 response.sendRedirect("/dashboard");
