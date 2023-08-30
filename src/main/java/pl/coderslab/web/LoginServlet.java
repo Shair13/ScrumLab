@@ -28,7 +28,7 @@ public class LoginServlet extends HttpServlet {
             Admin user = adminDao.readByEmail(email);
 
 
-            if (user != null && adminDao.checkPassword(password, user.getPassword())) {
+            if (user.getEmail() != null && adminDao.checkPassword(password, user.getPassword())) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
                 response.sendRedirect("/dashboard");
