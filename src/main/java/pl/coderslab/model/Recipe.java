@@ -1,12 +1,14 @@
 package pl.coderslab.model;
 
+import java.sql.Timestamp;
+
 public class Recipe {
     private int id;
     private String name;
     private String ingredients;
     private String description;
-    private String created;
-    private String updated;
+    private Timestamp created;
+    private Timestamp updated;
     private String preparation_time;
     private String preparation;
     private int admin_id;
@@ -43,19 +45,19 @@ public class Recipe {
         this.description = description;
     }
 
-    public String getCreated() {
+    public Timestamp getCreated() {
         return created;
     }
 
-    public void setCreated(String created) {
+    public void setCreated(Timestamp created) {
         this.created = created;
     }
 
-    public String getUpdated() {
+    public Timestamp getUpdated() {
         return updated;
     }
 
-    public void setUpdated(String updated) {
+    public void setUpdated(Timestamp updated) {
         this.updated = updated;
     }
 

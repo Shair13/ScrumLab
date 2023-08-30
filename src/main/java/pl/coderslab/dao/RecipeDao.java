@@ -39,8 +39,8 @@ public class RecipeDao {
                     recipe.setName(resultSet.getString("name"));
                     recipe.setIngredients(resultSet.getString("ingredients"));
                     recipe.setDescription(resultSet.getString("description"));
-                    recipe.setCreated(resultSet.getString("created"));
-                    recipe.setUpdated(resultSet.getString("updated"));
+                    recipe.setCreated(resultSet.getTimestamp("created"));
+                    recipe.setUpdated(resultSet.getTimestamp("updated"));
                     recipe.setPreparation_time(resultSet.getString("preparation_time"));
                     recipe.setPreparation(resultSet.getString("preparation"));
                     recipe.setAdmin_id(resultSet.getInt("admin_id"));
@@ -72,8 +72,8 @@ public class RecipeDao {
                 recipeToAdd.setName(resultSet.getString("name"));
                 recipeToAdd.setIngredients(resultSet.getString("ingredients"));
                 recipeToAdd.setDescription(resultSet.getString("description"));
-                recipeToAdd.setCreated(resultSet.getString("created"));
-                recipeToAdd.setUpdated(resultSet.getString("updated"));
+                recipeToAdd.setCreated(resultSet.getTimestamp("created"));
+                recipeToAdd.setUpdated(resultSet.getTimestamp("updated"));
                 recipeToAdd.setPreparation_time(resultSet.getString("preparation_time"));
                 recipeToAdd.setPreparation(resultSet.getString("preparation"));
                 recipeToAdd.setAdmin_id(resultSet.getInt("admin_id"));
@@ -102,8 +102,8 @@ public class RecipeDao {
             insertStm.setString(1, recipe.getName());
             insertStm.setString(2, recipe.getIngredients());
             insertStm.setString(3, recipe.getDescription());
-            insertStm.setString(4, recipe.getCreated());
-            insertStm.setString(5, recipe.getUpdated());
+            insertStm.setTimestamp(4, recipe.getCreated());
+            insertStm.setTimestamp(5, recipe.getUpdated());
             insertStm.setString(6, recipe.getPreparation_time());
             insertStm.setString(8, recipe.getPreparation());
             insertStm.setInt(9, recipe.getAdmin_id());
@@ -162,7 +162,7 @@ public class RecipeDao {
             statement.setString(1, recipe.getName());
             statement.setString(2, recipe.getIngredients());
             statement.setString(3, recipe.getDescription());
-            statement.setString(4, recipe.getUpdated());
+            statement.setTimestamp(4, recipe.getUpdated());
             statement.setString(5, recipe.getPreparation_time());
             statement.setString(6, recipe.getPreparation());
             statement.setInt(7, recipe.getAdmin_id());
