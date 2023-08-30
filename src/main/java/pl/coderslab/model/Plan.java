@@ -71,4 +71,5 @@ public class Plan {
                 ", adminId=" + adminId +
                 '}';
     }
+
 }
