@@ -64,7 +64,7 @@ public class PlanDao {
         ) {
             preStmt.setInt(1, planId);
 
-            try (ResultSet resultSet = preStmt.executeQuery()) {
+            try(ResultSet resultSet = preStmt.executeQuery()){
                 if (resultSet.next()) {
                     plan.setId(resultSet.getInt(1));
                     plan.setName(resultSet.getString(2));
