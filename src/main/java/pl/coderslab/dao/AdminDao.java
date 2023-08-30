@@ -120,6 +120,10 @@ public class AdminDao {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
+    public boolean checkPassword(String plaintext, String hashed) {
+        return BCrypt.checkpw(plaintext, hashed);
+    }
+
     public void delete(Integer adminId) {
         try (Connection connection = DbUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_ADMIN_QUERY)) {
