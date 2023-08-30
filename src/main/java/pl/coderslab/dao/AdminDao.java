@@ -18,7 +18,7 @@ public class AdminDao {
     private static final String FIND_ALL_ADMINS_QUERY = "SELECT * FROM admins;";
     private static final String READ_ADMIN_QUERY = "SELECT * from admins where id = ?;";
 
-    private static final String READ_ADMIN_BY_EMAIL_QUERY = "SELECT * from admins where email = ?;";
+    private static final String READ_ADMIN_BY_EMAIL_QUERY = "SELECT email, password from admins where email = ?;";
     private static final String UPDATE_ADMIN_QUERY = "UPDATE admins SET first_name = ?, last_name = ?, email = ?, " +
             "password = ?, superadmin = ?, enable = ? WHERE id = ?;";
 
@@ -30,13 +30,13 @@ public class AdminDao {
             statement.setInt(1, adminId);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    admin.setId(resultSet.getInt("id"));
-                    admin.setFirstName(resultSet.getString("first_name"));
-                    admin.setLastName(resultSet.getString("last_name"));
+//                    admin.setId(resultSet.getInt("id"));
+//                    admin.setFirstName(resultSet.getString("first_name"));
+//                    admin.setLastName(resultSet.getString("last_name"));
                     admin.setEmail(resultSet.getString("email"));
                     admin.setPassword(resultSet.getString("password"));
-                    admin.setSuperadmin(resultSet.getInt("superadmin"));
-                    admin.setEnable(resultSet.getInt("enable"));
+//                    admin.setSuperadmin(resultSet.getInt("superadmin"));
+//                    admin.setEnable(resultSet.getInt("enable"));
                 }
             }
 
