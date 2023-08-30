@@ -23,35 +23,6 @@ public class PlanDao {
             "DELETE FROM plan WHERE id = ?";
     private static final String FIND_ALL_PLAN_QUERY =
             "SELECT * FROM plan";
-    private static final String READ_NEWEST_USERS_PLAN =
-            """
-            SELECT day_name.name as day_name, meal_name,  recipe.name as recipe_name, recipe.description as recipe_description
-            FROM `recipe_plan`
-            JOIN day_name on day_name.id=day_name_id
-            JOIN recipe on recipe.id=recipe_id 
-            WHERE recipe_plan.plan_id = (SELECT MAX(id) 
-            FROM plan WHERE admin_id = ?) ORDER BY day_name.display_order, recipe_plan.display_order;""";
-
-    public Plan findLastPlan(int adminId){
-        Plan newestPlan = new Plan();
-        try (Connection conn = DbUtil.getConnection();
-             PreparedStatement preStmt = conn.prepareStatement(READ_NEWEST_USERS_PLAN)
-        ) {
-            preStmt.setInt(1, adminId);
-            try(ResultSet resultSet = preStmt.executeQuery()){
-                if (resultSet.next()) {
-                    newestPlan.setId(resultSet.getInt(1));
-                    newestPlan.setName(resultSet.getString(2));
-                    newestPlan.setDescription(resultSet.getString(3));
-                    newestPlan.setCreated(resultSet.getTimestamp(4));
-                    newestPlan.setAdminId(resultSet.getInt(5));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return newestPlan;
-    }
 
     public Plan createPlan(Plan plan) {
         try (Connection conn = DbUtil.getConnection();
@@ -88,7 +59,7 @@ public class PlanDao {
         ) {
             preStmt.setInt(1, planId);
 
-            try(ResultSet resultSet = preStmt.executeQuery()){
+            try (ResultSet resultSet = preStmt.executeQuery()) {
                 if (resultSet.next()) {
                     plan.setId(resultSet.getInt(1));
                     plan.setName(resultSet.getString(2));
