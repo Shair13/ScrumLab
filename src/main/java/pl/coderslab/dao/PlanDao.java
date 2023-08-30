@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlanDao {
+
     private static final String CREATE_PLAN_QUERY =
             "INSERT INTO plan(name, description, created, admin_id) VALUES (?, ?, ?, ?)";
     private static final String READ_PLAN_QUERY =
@@ -23,6 +24,8 @@ public class PlanDao {
             "DELETE FROM plan WHERE id = ?";
     private static final String FIND_ALL_PLAN_QUERY =
             "SELECT * FROM plan";
+    private static final String GET_NUMBER_OF_ADMIN_RECIPES =
+            "SELECT COUNT(*) FROM plan WHERE admin_id=?";
 
     public Plan createPlan(Plan plan) {
         try (Connection conn = DbUtil.getConnection();
@@ -59,7 +62,7 @@ public class PlanDao {
         ) {
             preStmt.setInt(1, planId);
 
-            try(ResultSet resultSet = preStmt.executeQuery()){
+            try (ResultSet resultSet = preStmt.executeQuery()) {
                 if (resultSet.next()) {
                     plan.setId(resultSet.getInt(1));
                     plan.setName(resultSet.getString(2));
@@ -108,10 +111,10 @@ public class PlanDao {
 
     public List<Plan> findAll() {
         List<Plan> planList = new ArrayList<>();
-        try (Connection conn = DbUtil.getConnection()) {
-            PreparedStatement preStmt = conn.prepareStatement(FIND_ALL_PLAN_QUERY);
+        try (Connection conn = DbUtil.getConnection();
+             PreparedStatement preStmt = conn.prepareStatement(FIND_ALL_PLAN_QUERY)
+        ) {
             ResultSet rs = preStmt.executeQuery();
-
             while (rs.next()) {
                 Plan planToAdd = new Plan();
                 planToAdd.setId(rs.getInt("id"));
@@ -126,5 +129,21 @@ public class PlanDao {
             e.printStackTrace();
         }
         return planList;
+    }
+
+    public int getRecipesCountByAdmin(int adminId) {
+        try (Connection conn = DbUtil.getConnection();
+             PreparedStatement preStmt = conn.prepareStatement(GET_NUMBER_OF_ADMIN_RECIPES)
+        ) {
+            preStmt.setInt(1, adminId);
+            try (ResultSet resultSet = preStmt.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }
