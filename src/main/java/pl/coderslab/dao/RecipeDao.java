@@ -141,10 +141,10 @@ public class RecipeDao {
             statement.setInt(1, id);
             statement.executeUpdate();
 
-            boolean deleted = statement.execute();
-            if (!deleted) {
-                throw new NotFoundException("Product not found");
-            }
+//            boolean deleted = statement.execute();
+//            if (!deleted) {
+//                throw new NotFoundException("Product not found");
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }
