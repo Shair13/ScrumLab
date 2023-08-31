@@ -24,20 +24,14 @@ public class AddPlanServlet extends HttpServlet {
         String description = request.getParameter("description");
         HttpSession session = request.getSession();
         if (session.getAttribute("user") == null){
-            response.setContentType("text/html");
-            PrintWriter out = response.getWriter();
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert('Brak aktywnej sesji user');");
-            out.println("</script>");
-//            response.sendRedirect("/app/plan/add");
-            //tu trzeba będzie pomyśleć nad jakimś alarmem
+            response.sendRedirect("/login");
         } else {
             Admin user = (Admin) session.getAttribute("user");
             PlanDao planDao = new PlanDao();
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             Plan newPlan = new Plan(name, description, timestamp, user.getId());
             planDao.createPlan(newPlan);
-            response.sendRedirect("/app/plan/add");
+            response.sendRedirect("/dashboard");
         }
     }
 }
