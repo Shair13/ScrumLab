@@ -18,7 +18,6 @@ public class AdminDao {
     private static final String FIND_ALL_ADMINS_QUERY = "SELECT * FROM admins;";
     private static final String READ_ADMIN_QUERY = "SELECT * from admins where id = ?;";
 
-    private static final String EXISTS_ADMIN_QUERY = "SELECT EXISTS(SELECT * from admins WHERE id=?) AS result;";
     private static final String READ_ADMIN_BY_EMAIL_QUERY = "SELECT * from admins where email = ?;";
     private static final String UPDATE_ADMIN_QUERY = "UPDATE admins SET first_name = ?, last_name = ?, email = ?, " +
             "password = ?, superadmin = ?, enable = ? WHERE id = ?;";
@@ -70,13 +69,15 @@ public class AdminDao {
         return admin;
     }
 
-    public boolean authorize(Integer adminId) {
+    public boolean authorize(String email, String password) {
         try (Connection connection = DbUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(EXISTS_ADMIN_QUERY)) {
-            statement.setInt(1, adminId);
+             PreparedStatement statement = connection.prepareStatement(READ_ADMIN_BY_EMAIL_QUERY)) {
+            statement.setString(1, email);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    return resultSet.getBoolean("result");
+                    if(BCrypt.checkpw(password, resultSet.getString("password"))) {
+                        return true;
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -135,6 +136,10 @@ public class AdminDao {
 
     private String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    private boolean verifyPassword(){
+        return BCrypt.checkpw(candidate, hashed);
     }
 
     public boolean checkPassword(String plaintext, String hashed) {
