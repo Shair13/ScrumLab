@@ -17,7 +17,7 @@ public class DayNameDao {
 
     private static final String CREATE_DAYNAME_QUERY = "INSERT INTO day_name(name, display_order) VALUES (?,?);";
     private static final String DELETE_DAYNAME_QUERY = "DELETE FROM day_name WHERE id = ?;";
-    private static final String FIND_ALL_DAYNAMES_QUERY = "SELECT * FROM day_name;";
+    private static final String FIND_ALL_DAYNAMES_QUERY = "SELECT * FROM day_name ORDER BY display_order;";
     private static final String READ_DAYNAME_QUERY = "SELECT * FROM day_name WHERE id = ?;";
     private static final String UPDATE_DAYNAME_QUERY = "UPDATE	day_name SET name = ? , display_order = ? WHERE	id = ?;";
 
