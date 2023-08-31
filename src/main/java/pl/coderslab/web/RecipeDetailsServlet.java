@@ -14,40 +14,25 @@ import java.util.regex.Pattern;
 public class RecipeDetailsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String idParam = request.getParameter("id");
         String REGEX = "[0-9]+";
         Pattern pattern = Pattern.compile(REGEX);
-        HttpSession session = request.getSession();
 
-        if(session.getAttribute("user") != null) {
+        if (idParam == null) {
+            response.sendRedirect("/dashboard");
+        } else if (pattern.matcher(idParam).matches()) {
 
-            if (idParam == null) {
-                response.sendRedirect("/dashboard");
-            } else if (pattern.matcher(idParam).matches()) {
-                int id = Integer.parseInt(idParam);
-                RecipeDao recipeDao = new RecipeDao();
-                Recipe recipe = recipeDao.read(id);
-                String[] ingredientsArr = recipe.getIngredients().split("\\n");
-                request.setAttribute("ingredients", ingredientsArr);
-                request.setAttribute("recipe", recipe);
-                getServletContext().getRequestDispatcher("/recipedetailsApp.jsp").forward(request, response);
-            } else {
-                response.sendRedirect("/dashboard");
-            }
+            int id = Integer.parseInt(idParam);
+            RecipeDao recipeDao = new RecipeDao();
+            Recipe recipe = recipeDao.read(id);
+            String[] ingredientsArr = recipe.getIngredients().split("\\n");
+            request.setAttribute("ingredients", ingredientsArr);
+            request.setAttribute("recipe", recipe);
+            getServletContext().getRequestDispatcher("/recipedetailsApp.jsp").forward(request, response);
+
         } else {
-            if (idParam == null) {
-                response.sendRedirect("/");
-            } else if (pattern.matcher(idParam).matches()) {
-                int id = Integer.parseInt(idParam);
-                RecipeDao recipeDao = new RecipeDao();
-                Recipe recipe = recipeDao.read(id);
-                String[] ingredientsArr = recipe.getIngredients().split("\\n");
-                request.setAttribute("ingredients", ingredientsArr);
-                request.setAttribute("recipe", recipe);
-                getServletContext().getRequestDispatcher("/recipedetails.jsp").forward(request, response);
-            } else {
-                response.sendRedirect("/");
-            }
+            response.sendRedirect("/dashboard");
         }
     }
 
