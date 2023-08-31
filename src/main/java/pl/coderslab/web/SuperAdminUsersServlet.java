@@ -10,7 +10,7 @@ import java.io.IOException;
 @WebServlet("/superAdminUsers")
 public class SuperAdminUsersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("superAdminUsers.jsp");
+        getServletContext().getRequestDispatcher("/superAdminUsers.jsp").forward(request, response);
     }
 
     @Override
