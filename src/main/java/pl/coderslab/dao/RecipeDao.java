@@ -15,7 +15,7 @@ public class RecipeDao {
 
     //  SQL query
 
-    private static final String CREATE_RECIPE_QUERY = "INSERT INTO recipe(name,ingredients,description,created,updated,preparation_time,preparation,admin_id) VALUES (?,?,?,NOW(),NOW(),?,?,?);";
+    private static final String CREATE_RECIPE_QUERY = "INSERT INTO recipe(name,ingredients,description,preparation_time,preparation,admin_id) VALUES (?,?,?,NOW(),NOW(),?,?,?);";
     private static final String DELETE_RECIPE_QUERY = "DELETE FROM recipe where id = ?;";
     private static final String FIND_ALL_RECIPE_QUERY = "SELECT * FROM recipe;";
     private static final String READ_RECIPE_QUERY = "SELECT * from recipe where id = ?;";
@@ -103,9 +103,9 @@ public class RecipeDao {
             insertStm.setString(1, recipe.getName());
             insertStm.setString(2, recipe.getIngredients());
             insertStm.setString(3, recipe.getDescription());
-            insertStm.setString(6, recipe.getPreparation_time());
-            insertStm.setString(8, recipe.getPreparation());
-            insertStm.setInt(9, recipe.getAdmin_id());
+            insertStm.setString(4, recipe.getPreparation_time());
+            insertStm.setString(5, recipe.getPreparation());
+            insertStm.setInt(6, recipe.getAdmin_id());
 
             int result = insertStm.executeUpdate();
 
