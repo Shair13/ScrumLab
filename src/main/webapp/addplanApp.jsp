@@ -35,9 +35,7 @@
 
         <div class="m-4 p-3 width-medium">
             <div class="dashboard-content border-dashed p-3 m-4 view-height">
-                <!-- fix action, method -->
-                <!-- add name attribute for all inputs -->
-                <form>
+                <form action="/app/plan/add" method="post">
                     <div class="row border-bottom border-3 p-1 m-1">
                         <div class="col noPadding">
                             <h3 class="color-header text-uppercase">NOWY PLAN</h3>
@@ -54,7 +52,7 @@
                                 Nazwa planu
                             </label>
                             <div class="col-sm-10">
-                                <input class="form-control" id="planName" placeholder="Nazwa planu">
+                                <input class="form-control" name="name" id="planName" placeholder="Nazwa planu">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -62,11 +60,15 @@
                                 Opis planu
                             </label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" rows="5" id="planDescription"
+                                <textarea class="form-control" rows="5" id="planDescription" name="description"
                                           placeholder="Opis plany"></textarea>
                             </div>
                         </div>
 
+                    </div>
+                    <div class="info-container">
+                        <div id="error-message" class="alert alert-danger d-none">
+                        </div>
                     </div>
                 </form>
             </div>
@@ -74,7 +76,7 @@
     </div>
 </section>
 
-
+<script src="/js/addPlanValidation.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
