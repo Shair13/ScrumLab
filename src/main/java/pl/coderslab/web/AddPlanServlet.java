@@ -22,16 +22,14 @@ public class AddPlanServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("name");
         String description = request.getParameter("description");
+
         HttpSession session = request.getSession();
-        if (session.getAttribute("user") == null){
-            response.sendRedirect("/login");
-        } else {
-            Admin user = (Admin) session.getAttribute("user");
-            PlanDao planDao = new PlanDao();
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            Plan newPlan = new Plan(name, description, timestamp, user.getId());
-            planDao.createPlan(newPlan);
-            response.sendRedirect("/dashboard");
-        }
+
+        Admin user = (Admin) session.getAttribute("user");
+        PlanDao planDao = new PlanDao();
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Plan newPlan = new Plan(name, description, timestamp, user.getId());
+        planDao.createPlan(newPlan);
+        response.sendRedirect("/dashboard");
     }
 }
