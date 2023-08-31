@@ -13,8 +13,6 @@ import java.io.IOException;
 @WebFilter("/app/*")
 public class AuthorizationFilter implements Filter {
 
-    private AdminDao adminDao = new AdminDao();
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
