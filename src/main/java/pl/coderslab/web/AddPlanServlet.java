@@ -24,7 +24,7 @@ public class AddPlanServlet extends HttpServlet {
         String description = request.getParameter("description");
 
         HttpSession session = request.getSession();
-
+        
         Admin user = (Admin) session.getAttribute("user");
         PlanDao planDao = new PlanDao();
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
