@@ -138,10 +138,6 @@ public class AdminDao {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
-    private boolean verifyPassword(){
-        return BCrypt.checkpw(candidate, hashed);
-    }
-
     public boolean checkPassword(String plaintext, String hashed) {
         return BCrypt.checkpw(plaintext, hashed);
     }
