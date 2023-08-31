@@ -7,6 +7,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet(name = "LoginServlet", value = "/login")
 public class LoginServlet extends HttpServlet {
@@ -27,8 +28,7 @@ public class LoginServlet extends HttpServlet {
             AdminDao adminDao = new AdminDao();
             Admin user = adminDao.readByEmail(email);
 
-
-            if (user.getEmail() != null && adminDao.checkPassword(password, user.getPassword())) {
+            if (adminDao.authorize(email, password)) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
                 response.sendRedirect("/dashboard");

@@ -73,11 +73,10 @@ public class AdminDao {
         try (Connection connection = DbUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(READ_ADMIN_BY_EMAIL_QUERY)) {
             statement.setString(1, email);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    if(BCrypt.checkpw(password, resultSet.getString("password"))) {
-                        return true;
-                    }
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                if (BCrypt.checkpw(password, resultSet.getString("password"))) {
+                    return true;
                 }
             }
         } catch (SQLException e) {
@@ -136,6 +135,10 @@ public class AdminDao {
 
     private String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    public boolean checkPassword(String plaintext, String hashed) {
+        return BCrypt.checkpw(plaintext, hashed);
     }
 
     public void delete(Integer adminId) {
