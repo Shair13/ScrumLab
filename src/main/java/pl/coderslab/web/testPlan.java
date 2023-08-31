@@ -15,18 +15,19 @@ public class testPlan extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PlanDao planDao = new PlanDao();
+        System.out.println(planDao.getRecipesCountByAdmin(1));
 
-        planDao.createPlan(new Plan("Halo","Cześć", new Timestamp(System.currentTimeMillis()), 1));
-        System.out.println(planDao.readPlan(7));
-        Plan planToChange = planDao.readPlan(7);
-        planToChange.setName("holahola");
-        planDao.update(planToChange);
-        System.out.println(planDao.readPlan(7));
-        planDao.delete(7);
-        List<Plan> plans = planDao.findAll();
-        for (Plan plan: plans) {
-            System.out.println(plan);
-        }
+//        planDao.createPlan(new Plan("Halo","Cześć", new Timestamp(System.currentTimeMillis()), 1));
+//        System.out.println(planDao.readPlan(7));
+//        Plan planToChange = planDao.readPlan(7);
+//        planToChange.setName("holahola");
+//        planDao.update(planToChange);
+//        System.out.println(planDao.readPlan(7));
+//        planDao.delete(7);
+//        List<Plan> plans = planDao.findAll();
+//        for (Plan plan: plans) {
+//            System.out.println(plan);
+//        }
 
 
 
