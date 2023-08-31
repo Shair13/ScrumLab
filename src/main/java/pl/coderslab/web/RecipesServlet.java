@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 @WebServlet("/recipes")
 public class RecipesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("recipes.jsp");
+        getServletContext().getRequestDispatcher("/recipes.jsp").forward(request, response);
     }
 
     @Override

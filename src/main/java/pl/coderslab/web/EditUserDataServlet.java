@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 @WebServlet("/editUserData")
 public class EditUserDataServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("editUserData.jsp");
+        getServletContext().getRequestDispatcher("/editUserData.jsp").forward(request, response);
     }
 
     @Override

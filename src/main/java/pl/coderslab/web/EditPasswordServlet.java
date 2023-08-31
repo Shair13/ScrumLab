@@ -10,7 +10,7 @@ import java.io.IOException;
 @WebServlet("/editPassword")
 public class EditPasswordServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("editPassword.jsp");
+        getServletContext().getRequestDispatcher("/editPassword.jsp").forward(request, response);
     }
 
     @Override
