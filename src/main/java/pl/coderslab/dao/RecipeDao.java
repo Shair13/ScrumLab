@@ -15,7 +15,7 @@ public class RecipeDao {
 
     //  SQL query
 
-    private static final String CREATE_RECIPE_QUERY = "INSERT INTO recipe(name,ingredients,description,preparation_time,preparation,admin_id) VALUES (?,?,?,NOW(),NOW(),?,?,?);";
+    private static final String CREATE_RECIPE_QUERY = "INSERT INTO recipe(name,ingredients,description, created, updated, preparation_time,preparation,admin_id) VALUES (?,?,?,NOW(),NOW(),?,?,?);";
     private static final String DELETE_RECIPE_QUERY = "DELETE FROM recipe where id = ?;";
     private static final String FIND_ALL_RECIPE_QUERY = "SELECT * FROM recipe;";
     private static final String READ_RECIPE_QUERY = "SELECT * from recipe where id = ?;";
