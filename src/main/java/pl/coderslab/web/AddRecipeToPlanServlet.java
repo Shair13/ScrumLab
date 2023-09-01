@@ -11,6 +11,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 @WebServlet("/app/recipe/plan/add")
 public class AddRecipeToPlanServlet extends HttpServlet {
@@ -29,13 +30,21 @@ public class AddRecipeToPlanServlet extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String REGEX = "[0-9]+";
+        Pattern pattern = Pattern.compile(REGEX);
         RecipePlanDao recipePlanDao = new RecipePlanDao();
         int recipeId = Integer.parseInt(request.getParameter("recipePlanRecipeId"));
         String mealName = request.getParameter("recipePlanMealName");
-        int displayOrder = Integer.parseInt(request.getParameter("recipePlanDisplayOrder"));
+        String displayOrderParam = request.getParameter("recipePlanDisplayOrder");
         int dayNameId = Integer.parseInt(request.getParameter("recipePlanDayNameId"));
         int planId = Integer.parseInt(request.getParameter("recipePlanPlanId"));
-        recipePlanDao.create(new RecipePlan(recipeId, mealName, displayOrder, dayNameId, planId));
-        response.sendRedirect(request.getContextPath() + "/app/dashboard");
+        if (!pattern.matcher(displayOrderParam).matches()){
+            response.sendRedirect("/app/recipe/plan/add");
+        }else{
+            int displayOrder = Integer.parseInt(displayOrderParam);
+            recipePlanDao.create(new RecipePlan(recipeId, mealName, displayOrder, dayNameId, planId));
+            response.sendRedirect(request.getContextPath() + "/app/dashboard");
+        }
+
     }
 }
