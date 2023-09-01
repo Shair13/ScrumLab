@@ -1,9 +1,11 @@
-const form = document.querySelector('form');
+const saveButton = document.querySelector('form');
+const cancelButton = document.getElementById("cancel");
 const planNameInput = document.querySelector('#planName');
 const planDescriptionTextera = document.querySelector("#planDescription");
 const errorMessage = document.querySelector('div#error-message');
 
-form.addEventListener('submit', onFormSubmission);
+saveButton.addEventListener('submit', onFormSubmission);
+cancelButton.addEventListener('click', redirectToSchedules);
 
 function onFormSubmission(event) {
 
@@ -23,4 +25,7 @@ function onFormSubmission(event) {
         errorMessage.classList.remove("d-none");
         event.preventDefault();
     }
+}
+function redirectToSchedules() {
+    window.location.href = "/app/schedules";
 }
