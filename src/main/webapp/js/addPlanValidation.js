@@ -27,5 +27,5 @@ function onFormSubmission(event) {
     }
 }
 function redirectToSchedules() {
-    window.location.href = "/app/schedules";
+    window.location.href = "/app/dashboard";
 }
