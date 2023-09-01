@@ -26,7 +26,7 @@ public class AddRecipeServlet extends HttpServlet {
         RecipeDao recipeDao = new RecipeDao();
         recipeDao.create(new Recipe(request.getParameter("name"), request.getParameter("ingredients"),
                 request.getParameter("description"), request.getParameter("preparationTime"), request.getParameter("preparation"), admin.getId()));
-        response.sendRedirect("/dashboard");
+        response.sendRedirect("/app/dashboard");
 
 
     }

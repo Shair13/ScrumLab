@@ -30,6 +30,6 @@ public class AddPlanServlet extends HttpServlet {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         Plan newPlan = new Plan(name, description, timestamp, user.getId());
         planDao.createPlan(newPlan);
-        response.sendRedirect("/dashboard");
+        response.sendRedirect("/app/dashboard");
     }
 }

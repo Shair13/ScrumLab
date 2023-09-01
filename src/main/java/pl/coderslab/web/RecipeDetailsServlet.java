@@ -20,7 +20,7 @@ public class RecipeDetailsServlet extends HttpServlet {
         Pattern pattern = Pattern.compile(REGEX);
 
         if (idParam == null) {
-            response.sendRedirect("/dashboard");
+            response.sendRedirect("/app/dashboard");
         } else if (pattern.matcher(idParam).matches()) {
 
             int id = Integer.parseInt(idParam);
@@ -32,7 +32,7 @@ public class RecipeDetailsServlet extends HttpServlet {
             getServletContext().getRequestDispatcher("/recipedetailsApp.jsp").forward(request, response);
 
         } else {
-            response.sendRedirect("/dashboard");
+            response.sendRedirect("/app/dashboard");
         }
     }
 
