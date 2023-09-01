@@ -21,13 +21,13 @@ public class AddRecipeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Admin admin = (Admin)session.getAttribute("user");
+        Admin admin = (Admin) session.getAttribute("user");
 
-            RecipeDao recipeDao = new RecipeDao();
-            recipeDao.create(new Recipe(request.getParameter("name"), request.getParameter("ingredients"),
-                    request.getParameter("description"), request.getParameter("preparationTime"),request.getParameter("preparation"), admin.getId()));
-            getServletContext().getRequestDispatcher("/about.jsp").forward(request, response);
-            //to się zmieni jak mikołaj zrobi jsp pod to
+        RecipeDao recipeDao = new RecipeDao();
+        recipeDao.create(new Recipe(request.getParameter("name"), request.getParameter("ingredients"),
+                request.getParameter("description"), request.getParameter("preparationTime"), request.getParameter("preparation"), admin.getId()));
+        response.sendRedirect("/dashboard");
+
 
     }
 }
