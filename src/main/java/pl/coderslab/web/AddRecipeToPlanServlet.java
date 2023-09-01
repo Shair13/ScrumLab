@@ -36,6 +36,6 @@ public class AddRecipeToPlanServlet extends HttpServlet {
         int dayNameId = Integer.parseInt(request.getParameter("recipePlanDayNameId"));
         int planId = Integer.parseInt(request.getParameter("recipePlanPlanId"));
         recipePlanDao.create(new RecipePlan(recipeId, mealName, displayOrder, dayNameId, planId));
-        response.sendRedirect(request.getContextPath() + "/dashboard");
+        response.sendRedirect(request.getContextPath() + "/app/dashboard");
     }
 }
