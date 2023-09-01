@@ -13,7 +13,7 @@ function onFormSubmission(event) {
         console.log("za krotka nazwa")
         errors.push("Nazwa posiłku jest za krótka");
     }
-    if (!isFinite(parseFloat(mealNumberInput.value))) {
+    if (!(/^[1-9][0-9]*$/.test(mealNumberInput.value))) {
         errors.push("Numer posiłku nie jest liczbą");
     }
 

@@ -30,7 +30,7 @@ public class AddRecipeToPlanServlet extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String REGEX = "[0-9]+";
+        String REGEX = "[1-9][0-9]*";
         Pattern pattern = Pattern.compile(REGEX);
         RecipePlanDao recipePlanDao = new RecipePlanDao();
         int recipeId = Integer.parseInt(request.getParameter("recipePlanRecipeId"));
