@@ -26,7 +26,12 @@ public class DashboardServlet extends HttpServlet {
         int recipeCount = recipeDao.countRecipeByAdmin(adminId);
 
         List<RecipePlan> recipePlans = recipePlanDao.findLastPlan(adminId);
-        String latestPlanName = planDao.readPlan(recipePlans.get(0).getPlanId()).getName();
+
+        String latestPlanName = "Brak";
+        if(recipePlans.size() != 0){
+            latestPlanName = planDao.readPlan(recipePlans.get(0).getPlanId()).getName();
+        }
+
         List<DayName> latestPlanDays = new ArrayList<>();
         List<List<RecipePlan>> latestPlanMeals = new ArrayList<>();
         List<List<Recipe>> latestPlanRecipes = new ArrayList<>();
