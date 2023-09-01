@@ -37,7 +37,7 @@
                     </thead>
                     <tbody class="text-color-lighter">
                     <tr class="d-flex">
-                        <th scope="row" class="col-1">1</th>
+                        <th scope="row" class="col-1">${recipe.id}</th>
                         <td class="col-2">
                             Zapiekanka z ziemniakami i brukselką
                         </td>
@@ -50,7 +50,7 @@
                             <a href="#" class="btn btn-danger rounded-0 text-light m-1">Usuń</a>
                             <a href="/app-recipe-details.html"
                                class="btn btn-info rounded-0 text-light m-1">Szczegóły</a>
-                            <a href="/app-edit-recipe.html" class="btn btn-warning rounded-0 text-light m-1">Edytuj</a>
+                            <a href="/app/recipe/edit?id=${recipe.id}" class="btn btn-warning rounded-0 text-light m-1">Edytuj</a>
                         </td>
                     </tr>
                     <tr class="d-flex">

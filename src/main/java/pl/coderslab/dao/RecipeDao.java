@@ -20,7 +20,7 @@ public class RecipeDao {
     private static final String FIND_ALL_RECIPE_QUERY = "SELECT * FROM recipe;";
     private static final String FIND_ALL_RECIPE_BY_ADMIN_QUERY = "SELECT * FROM recipe WHERE admin_id=?;";
     private static final String READ_RECIPE_QUERY = "SELECT * from recipe where id = ?;";
-    private static final String UPDATE_RECIPE_QUERY = "UPDATE recipe SET name = ? , ingredients = ?, description = ?, updated = NOW(), preparation_time = ?, preparation = ?, admin_id = ? WHERE	id = ?;";
+    private static final String UPDATE_RECIPE_QUERY = "UPDATE recipe SET name = ? , ingredients = ?, description = ?, updated = NOW(), preparation_time = ?, preparation = ?, admin_id = ? WHERE id = ?;";
     private static final String COUNT_RECIPE_QUERY = "SELECT COUNT(*) FROM recipe WHERE admin_id = ?";
 
     /**
@@ -162,11 +162,10 @@ public class RecipeDao {
             statement.setString(1, recipe.getName());
             statement.setString(2, recipe.getIngredients());
             statement.setString(3, recipe.getDescription());
-            statement.setTimestamp(4, recipe.getUpdated());
-            statement.setString(5, recipe.getPreparation_time());
-            statement.setString(6, recipe.getPreparation());
-            statement.setInt(7, recipe.getAdmin_id());
-
+            statement.setString(4, recipe.getPreparation_time());
+            statement.setString(5, recipe.getPreparation());
+            statement.setInt(6, recipe.getAdmin_id());
+            statement.setInt(7, recipe.getId());
             statement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
