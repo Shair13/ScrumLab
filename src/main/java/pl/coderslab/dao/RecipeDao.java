@@ -18,8 +18,10 @@ public class RecipeDao {
     private static final String CREATE_RECIPE_QUERY = "INSERT INTO recipe(name,ingredients,description, created, updated, preparation_time,preparation,admin_id) VALUES (?,?,?,NOW(),NOW(),?,?,?);";
     private static final String DELETE_RECIPE_QUERY = "DELETE FROM recipe where id = ?;";
     private static final String FIND_ALL_RECIPE_QUERY = "SELECT * FROM recipe;";
+    private static final String FIND_ALL_RECIPE_BY_ADMIN_QUERY = "SELECT * FROM recipe WHERE admin_id=?;";
     private static final String READ_RECIPE_QUERY = "SELECT * from recipe where id = ?;";
-    private static final String UPDATE_RECIPE_QUERY = "UPDATE	recipe SET name = ? , ingredients = ?, description = ?, updated = NOW(), preparation_time = ?, preparation = ?, admin_id = ? WHERE	id = ?;";
+    private static final String UPDATE_RECIPE_QUERY = "UPDATE recipe SET name = ? , ingredients = ?, description = ?, updated = NOW(), preparation_time = ?, preparation = ?, admin_id = ? WHERE	id = ?;";
+    private static final String COUNT_RECIPE_QUERY = "SELECT COUNT(*) FROM recipe WHERE admin_id = ?";
 
     /**
      * Get recipe by id
@@ -172,4 +174,49 @@ public class RecipeDao {
 
     }
 
+    public int countRecipeByAdmin(int admin_id) {
+        int count = 0;
+        try (Connection connection = DbUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(COUNT_RECIPE_QUERY)) {
+            statement.setInt(1, admin_id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+    public List<Recipe> findAllByAdmin(int adminId) {
+        List<Recipe> recipeList = new ArrayList<>();
+        try (Connection connection = DbUtil.getConnection();
+             PreparedStatement insertStm = connection.prepareStatement(FIND_ALL_RECIPE_BY_ADMIN_QUERY);
+        ) {
+            insertStm.setInt(1, adminId);
+            ResultSet resultSet = insertStm.executeQuery();
+
+            //id, String name, String ingredients, String description, String created, String updated, String preparation_time, String preparation, int admin_id
+
+            while (resultSet.next()) {
+                Recipe recipeToAdd = new Recipe();
+                recipeToAdd.setId(resultSet.getInt("id"));
+                recipeToAdd.setName(resultSet.getString("name"));
+                recipeToAdd.setIngredients(resultSet.getString("ingredients"));
+                recipeToAdd.setDescription(resultSet.getString("description"));
+                recipeToAdd.setCreated(resultSet.getTimestamp("created"));
+                recipeToAdd.setUpdated(resultSet.getTimestamp("updated"));
+                recipeToAdd.setPreparation_time(resultSet.getString("preparation_time"));
+                recipeToAdd.setPreparation(resultSet.getString("preparation"));
+                recipeToAdd.setAdmin_id(resultSet.getInt("admin_id"));
+                recipeList.add(recipeToAdd);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return recipeList;
+
+    }
 }
