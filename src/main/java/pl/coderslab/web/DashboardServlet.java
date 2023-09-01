@@ -1,52 +1,61 @@
 package pl.coderslab.web;
 
-import pl.coderslab.dao.AdminDao;
-import pl.coderslab.dao.PlanDao;
-import pl.coderslab.dao.RecipeDao;
-import pl.coderslab.model.Admin;
+import pl.coderslab.dao.*;
+import pl.coderslab.model.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "DashboardServlet", value = "/app/dashboard")
 public class DashboardServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        AdminDao adminDao = new AdminDao();
         PlanDao planDao = new PlanDao();
         RecipeDao recipeDao = new RecipeDao();
+        DayNameDao dayNameDao = new DayNameDao();
+        RecipePlanDao recipePlanDao = new RecipePlanDao();
+        Admin admin = (Admin) session.getAttribute("user");
 
-        Admin readAdmin = adminDao.read(1);
-        readAdmin.setPassword("maslo");
-        adminDao.update(readAdmin);
+        int adminId = admin.getId();
+        int plansCount = planDao.getRecipesCountByAdmin(adminId);
+        int recipeCount = recipeDao.countRecipeByAdmin(adminId);
 
-//        Admin admin;
-//        if (session.getAttribute("user") == null) {
-////            response.sendRedirect("/login");
-//            return;
-//        } else {
-//            admin = (Admin) session.getAttribute("user");
-//        }
+        List<RecipePlan> recipePlans = recipePlanDao.findLastPlan(adminId);
+        String latestPlanName = planDao.readPlan(recipePlans.get(0).getPlanId()).getName();
+        List<DayName> latestPlanDays = new ArrayList<>();
+        List<List<RecipePlan>> latestPlanMeals = new ArrayList<>();
+        List<List<Recipe>> latestPlanRecipes = new ArrayList<>();
 
-        response.getWriter().append("test");
+        int dayNameId = 0;
+        List<RecipePlan> currentDayNameMeals = new ArrayList<>();
+        List<Recipe> currentDayNameRecipes = new ArrayList<>();
 
+        for (RecipePlan recipePlan : recipePlans) {
+            int currentDayNameId = recipePlan.getDayNameId();
+            if (dayNameId != currentDayNameId) {
+                latestPlanDays.add(dayNameDao.read(recipePlan.getDayNameId()));
+                currentDayNameRecipes = new ArrayList<>();
+                currentDayNameMeals = new ArrayList<>();
+                latestPlanMeals.add(currentDayNameMeals);
+                latestPlanRecipes.add(currentDayNameRecipes);
+            }
+            currentDayNameMeals.add(recipePlan);
+            currentDayNameRecipes.add(recipeDao.read(recipePlan.getRecipeId()));
+            dayNameId = currentDayNameId;
+        }
 
-        int plansCount = planDao.getRecipesCountByAdmin(1);
-        int recipeCount = recipeDao.countRecipeByAdmin(1);
-
-        response.getWriter().append(plansCount + " " + recipeCount);
-
-
-//        getServletContext().getRequestDispatcher("/dashboard.jsp")
-//                .forward(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
+        request.setAttribute("plansCount", plansCount);
+        request.setAttribute("recipeCount", recipeCount);
+        request.setAttribute("latestPlanName", latestPlanName);
+        request.setAttribute("latestPlanDays", latestPlanDays);
+        request.setAttribute("latestPlanMeals", latestPlanMeals);
+        request.setAttribute("latestPlanRecipes", latestPlanRecipes);
+        getServletContext().getRequestDispatcher("/dashboard.jsp")
+                .forward(request, response);
     }
 }
