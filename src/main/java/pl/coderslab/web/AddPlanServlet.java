@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 public class AddPlanServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/addplanApp.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/app-add-plan.jsp").forward(request, response);
     }
 
     @Override
