@@ -75,7 +75,8 @@
                                                 <a href="" class="btn btn-danger rounded-0 text-light m-1">Usuń</a>
                                             </td>
                                             <td class="col-2 center">
-                                                <a href="/app/plan/details?id=${plan.id}" class="btn btn-info rounded-0 text-light m-1">Szczegóły</a>
+                                                <a href="/app/recipe/details?id=${planRecipes[dayIdx][mealCounter.index].id}"
+                                                   class="btn btn-info rounded-0 text-light m-1">Szczegóły</a>
                                             </td>
                                         </tr>
                                     </c:forEach>
