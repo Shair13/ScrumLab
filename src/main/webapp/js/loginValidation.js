@@ -9,9 +9,9 @@ function onFormSubmission(event) {
 
     const errors = [];
 
-    // if (!email.value.includes('@')) {
-    //     errors.push('Email musi posiadać znak @');
-    // }
+    if (!email.value.includes('@')) {
+        errors.push('Email musi posiadać znak @');
+    }
     if (password.value === ""){
         errors.push("Podaj hasło");
     }
