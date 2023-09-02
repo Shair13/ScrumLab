@@ -49,9 +49,9 @@
                                     <a href="#" class="btn btn-danger rounded-0 text-light m-1" id="deleteButton"
                                        data-toggle="modal"
                                        data-target="#deleteMessage">Usuń</a>
-                                    <a href="/app/detailsSchedules?planId=${plan.id}"
+                                    <a href="/app/plan/details?planId=${plan.id}"
                                        class="btn btn-info rounded-0 text-light m-1">Szczegóły</a>
-                                    <a href="/app-edit-schedules.html"
+                                    <a href="/app/plan/edit?id=${plan.id}"
                                        class="btn btn-warning rounded-0 text-light m-1">Edytuj</a>
                                 </td>
                             </tr>
@@ -75,7 +75,7 @@
                                         <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Anuluj
                                         </button>
-                                        <a href="/app/deletePlan?planId="
+                                        <a href="/app/plan/delete?planId="
                                            class="btn btn-danger rounded-0 text-light m-1"
                                            data-target="#deleteMessage">Usuń</a>
                                     </div>
