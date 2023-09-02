@@ -76,7 +76,8 @@
                                         <td class="col-2">${meal.mealName}</td>
                                         <td class="col-8">${planRecipes[dayIdx][mealCounter.index].name}</td>
                                         <td class="col-2">
-                                            <button type="button" class="btn btn-primary rounded-0">Szczegóły</button>
+                                            <a href="/app/recipe/details?id=${planRecipes[dayIdx][mealCounter.index].id}"
+                                               class="btn btn-primary rounded-0">Szczegóły</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
