@@ -162,11 +162,10 @@ public class RecipeDao {
             statement.setString(1, recipe.getName());
             statement.setString(2, recipe.getIngredients());
             statement.setString(3, recipe.getDescription());
-            statement.setTimestamp(4, recipe.getUpdated());
-            statement.setString(5, recipe.getPreparation_time());
-            statement.setString(6, recipe.getPreparation());
-            statement.setInt(7, recipe.getAdmin_id());
-
+            statement.setString(4, recipe.getPreparation_time());
+            statement.setString(5, recipe.getPreparation());
+            statement.setInt(6, recipe.getAdmin_id());
+            statement.setInt(7, recipe.getId());
             statement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
