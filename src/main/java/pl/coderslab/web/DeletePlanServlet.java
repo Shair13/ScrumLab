@@ -14,8 +14,7 @@ public class DeletePlanServlet extends HttpServlet {
         int planId = Integer.parseInt(request.getParameter("planId"));
         PlanDao planDao = new PlanDao();
         planDao.delete(planId);
-        getServletContext().getRequestDispatcher("/schedules.jsp")
-                .forward(request, response);
+        response.sendRedirect("/app/plan/list");
     }
 
     @Override
