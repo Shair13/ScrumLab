@@ -25,6 +25,13 @@ public class Admin {
     public Admin() {
     }
 
+    public Admin(String firstName, String lastName, String email, int id) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

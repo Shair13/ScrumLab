@@ -22,6 +22,8 @@ public class AdminDao {
     private static final String UPDATE_ADMIN_QUERY = "UPDATE admins SET first_name = ?, last_name = ?, email = ?, " +
             "password = ?, superadmin = ?, enable = ? WHERE id = ?;";
 
+    private static final String UPDATE_USER_QUERY = "UPDATE admins SET first_name = ?, last_name = ?, email = ? WHERE id = ?;";
+
     public Admin read(Integer adminId) {
         Admin admin = new Admin();
         try (Connection connection = DbUtil.getConnection();
@@ -171,7 +173,19 @@ public class AdminDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    public void editUser(Admin admin) {
+        try (Connection connection = DbUtil.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_USER_QUERY)) {
+            statement.setInt(4, admin.getId());
+            statement.setString(1, admin.getFirstName());
+            statement.setString(2, admin.getLastName());
+            statement.setString(3, admin.getEmail());
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
