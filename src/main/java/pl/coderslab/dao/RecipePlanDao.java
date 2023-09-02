@@ -14,6 +14,14 @@ public class RecipePlanDao {
     private static final String CREATE_RECIPE_QUERY = "INSERT INTO recipe_plan(recipe_id,meal_name,display_order,day_name_id,plan_id) VALUES (?,?,?,?,?);";
     private static final String DELETE_RECIPE_PLAN_QUERY = "DELETE FROM recipe_plan where id = ?;";
     private static final String FIND_ALL_RECIPE_PLAN_BY_ADMIN_QUERY = "SELECT recipe_plan.* FROM recipe_plan JOIN plan on recipe_plan.plan_id=plan.id where plan.admin_id=?;";
+    private static final String FIND_ALL_RECIPE_PLAN_BY_PLAN_QUERY = """
+            SELECT recipe_plan.*
+            FROM recipe_plan
+                                 JOIN day_name on day_name.id = day_name_id
+                     JOIN plan on recipe_plan.plan_id = plan.id
+            WHERE plan.id = ?
+            ORDER BY day_name.display_order, recipe_plan.display_order;
+            """;
     private static final String READ_LATEST_USERS_PLAN = """
             SELECT recipe_plan.*
             FROM recipe_plan
@@ -22,8 +30,8 @@ public class RecipePlanDao {
             WHERE recipe_plan.plan_id = (SELECT MAX(id)
                                          FROM plan
                                          WHERE admin_id = ?)
-            ORDER BY day_name.display_order, recipe_plan.display_order
-                      """;
+            ORDER BY day_name.display_order, recipe_plan.display_order;
+            """;
 
     public RecipePlan create(RecipePlan recipePlan) {
         try (Connection connection = DbUtil.getConnection();
@@ -76,6 +84,30 @@ public class RecipePlanDao {
         }
         return recipePlanList;
 
+    }
+
+    public List<RecipePlan> findAllByPlan(int planId) {
+        List<RecipePlan> recipePlanList = new ArrayList<>();
+        try (Connection connection = DbUtil.getConnection();
+             PreparedStatement insertStm = connection.prepareStatement(FIND_ALL_RECIPE_PLAN_BY_PLAN_QUERY);
+        ) {
+            insertStm.setInt(1, planId);
+            ResultSet resultSet = insertStm.executeQuery();
+            while (resultSet.next()) {
+                RecipePlan recipeToAdd = new RecipePlan();
+                recipeToAdd.setId(resultSet.getInt("id"));
+                recipeToAdd.setRecipeId(resultSet.getInt("recipe_id"));
+                recipeToAdd.setMealName(resultSet.getString("meal_name"));
+                recipeToAdd.setDisplayOrder(resultSet.getInt("display_order"));
+                recipeToAdd.setDayNameId(resultSet.getInt("day_name_id"));
+                recipeToAdd.setPlanId(resultSet.getInt("plan_id"));
+                recipePlanList.add(recipeToAdd);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return recipePlanList;
     }
 
     public void delete(Integer id) {
