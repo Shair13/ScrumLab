@@ -26,13 +26,13 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="/editUserData">
+        <a class="nav-link" href="/app/user/edit">
             <span>Edytuj dane</span>
             <i class="fas fa-angle-right"></i>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link disabled" href="/editPassword">
+        <a class="nav-link disabled" href="/app/password/edit">
             <span>Zmień hasło</span>
             <i class="fas fa-angle-right"></i>
         </a>
