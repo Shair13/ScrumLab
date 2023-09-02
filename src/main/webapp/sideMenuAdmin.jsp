@@ -32,7 +32,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link disabled" href="/editPassword">
+        <a class="nav-link disabled" href="/app/password/edit">
             <span>Zmień hasło</span>
             <i class="fas fa-angle-right"></i>
         </a>
