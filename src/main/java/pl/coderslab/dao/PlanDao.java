@@ -2,6 +2,7 @@ package pl.coderslab.dao;
 
 import pl.coderslab.exception.NotFoundException;
 import pl.coderslab.model.Plan;
+import pl.coderslab.model.RecipePlan;
 import pl.coderslab.utils.DbUtil;
 
 import java.sql.Connection;
@@ -100,12 +101,13 @@ public class PlanDao {
         try (Connection conn = DbUtil.getConnection();
              PreparedStatement preStmt = conn.prepareStatement(DELETE_PLAN_QUERY)
         ) {
+            RecipePlanDao recipePlanDao = new RecipePlanDao();
+            List<RecipePlan> recipePlanList = recipePlanDao.findAllByPlan(planId);
+            for (RecipePlan recipePlan : recipePlanList) {
+                recipePlanDao.delete(recipePlan.getId());
+            }
             preStmt.setInt(1, planId);
             preStmt.executeUpdate();
-//            boolean deleted = preStmt.execute();
-//            if (!deleted) {
-//                throw new NotFoundException("Product not found");
-//            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

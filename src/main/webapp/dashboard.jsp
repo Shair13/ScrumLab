@@ -11,7 +11,6 @@
 <%@ include file="head.jsp" %>
 
 <body>
-
 <%@ include file="headerAdmin.jsp" %>
 
 <section class="dashboard-section">
@@ -54,35 +53,43 @@
                 </div>
             </div>
             <div class="m-4 p-4 border-dashed">
-                <h2 class="dashboard-content-title">
-                    <span>Ostatnio dodany plan: </span> ${latestPlanName}
-                </h2>
+                <c:choose>
+                    <c:when test="${planExists}">
+                        <h2 class="dashboard-content-title">
+                            <span>Ostatnio dodany plan: </span> ${plan.name}
+                        </h2>
 
-                <c:forEach items="${latestPlanDays}" var="day" varStatus="dayCounter">
-                    <c:set var="dayIdx" value="${dayCounter.index}"/>
-                    <table class="table">
-                        <thead>
-                        <tr class="d-flex">
-                            <th class="col-2">${day.name}</th>
-                            <th class="col-8"></th>
-                            <th class="col-2"></th>
-                        </tr>
-                        </thead>
+                        <c:forEach items="${planDays}" var="day" varStatus="dayCounter">
+                            <c:set var="dayIdx" value="${dayCounter.index}"/>
+                            <table class="table">
+                                <thead>
+                                <tr class="d-flex">
+                                    <th class="col-2">${day.name}</th>
+                                    <th class="col-8"></th>
+                                    <th class="col-2"></th>
+                                </tr>
+                                </thead>
 
-                        <tbody>
-                        <c:forEach items="${latestPlanMeals[dayIdx]}" var="meal" varStatus="mealCounter">
-                            <tr class="d-flex">
-                                <td class="col-2">${meal.mealName}</td>
-                                <td class="col-8">${latestPlanRecipes[dayIdx][mealCounter.index].name}</td>
-                                <td class="col-2">
-                                    <button type="button" class="btn btn-primary rounded-0">Szczegóły</button>
-                                </td>
-                            </tr>
+                                <tbody>
+                                <c:forEach items="${planMeals[dayIdx]}" var="meal" varStatus="mealCounter">
+                                    <tr class="d-flex">
+                                        <td class="col-2">${meal.mealName}</td>
+                                        <td class="col-8">${planRecipes[dayIdx][mealCounter.index].name}</td>
+                                        <td class="col-2">
+                                            <button type="button" class="btn btn-primary rounded-0">Szczegóły</button>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
                         </c:forEach>
-                        </tbody>
-                    </table>
-                </c:forEach>
-
+                    </c:when>
+                    <c:otherwise>
+                        <h2 class="dashboard-content-title">
+                            <span>Dodaj pierwszy plan lub dołącz przepis do istniejącego planu.</span>
+                        </h2>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
     </div>
