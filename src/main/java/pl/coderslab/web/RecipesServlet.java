@@ -24,7 +24,7 @@ public class RecipesServlet extends HttpServlet {
         RecipeDao recipeDao = new RecipeDao();
         List<Recipe> recipes = recipeDao.findAllByAdmin(id);
         request.setAttribute("recipes", recipes);
-        getServletContext().getRequestDispatcher("/recipes.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/app-recipes.jsp").forward(request, response);
     }
 
     @Override
