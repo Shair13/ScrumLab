@@ -51,7 +51,7 @@
                                        data-target="#deleteMessage">Usuń</a>
                                     <a href="/app/plan/details?planId=${plan.id}"
                                        class="btn btn-info rounded-0 text-light m-1">Szczegóły</a>
-                                    <a href="/app-edit-schedules.html"
+                                    <a href="/app/plan/edit?id=${plan.id}"
                                        class="btn btn-warning rounded-0 text-light m-1">Edytuj</a>
                                 </td>
                             </tr>
