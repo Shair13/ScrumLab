@@ -7,6 +7,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,6 @@ public class DashboardServlet extends HttpServlet {
         HttpSession session = request.getSession();
         PlanDao planDao = new PlanDao();
         RecipeDao recipeDao = new RecipeDao();
-        DayNameDao dayNameDao = new DayNameDao();
         RecipePlanDao recipePlanDao = new RecipePlanDao();
         Admin admin = (Admin) session.getAttribute("user");
 
@@ -25,42 +25,57 @@ public class DashboardServlet extends HttpServlet {
         int plansCount = planDao.getRecipesCountByAdmin(adminId);
         int recipeCount = recipeDao.countRecipeByAdmin(adminId);
 
-        List<RecipePlan> recipePlans = recipePlanDao.findLastPlan(adminId);
+        request.setAttribute("plansCount", plansCount);
+        request.setAttribute("recipeCount", recipeCount);
 
-        String latestPlanName = "Brak";
-        if(recipePlans.size() != 0){
-            latestPlanName = planDao.readPlan(recipePlans.get(0).getPlanId()).getName();
+        List<RecipePlan> recipePlans = recipePlanDao.findLastPlan(adminId);
+        processRecipePlan(request, response, recipePlans);
+
+        getServletContext().getRequestDispatcher("/dashboard.jsp")
+                .forward(request, response);
+    }
+
+    protected static void processRecipePlan(HttpServletRequest request, HttpServletResponse response,
+                                            List<RecipePlan> recipePlanList) {
+        PlanDao planDao = new PlanDao();
+        RecipeDao recipeDao = new RecipeDao();
+        DayNameDao dayNameDao = new DayNameDao();
+        
+        Plan plan;
+        boolean planExists;
+        if (recipePlanList.size() != 0) {
+            plan = planDao.readPlan(recipePlanList.get(0).getPlanId());
+            planExists = true;
+        } else {
+            return;
         }
 
-        List<DayName> latestPlanDays = new ArrayList<>();
-        List<List<RecipePlan>> latestPlanMeals = new ArrayList<>();
-        List<List<Recipe>> latestPlanRecipes = new ArrayList<>();
+        List<DayName> planDays = new ArrayList<>();
+        List<List<RecipePlan>> planMeals = new ArrayList<>();
+        List<List<Recipe>> planRecipes = new ArrayList<>();
 
         int dayNameId = 0;
-        List<RecipePlan> currentDayNameMeals = new ArrayList<>();
-        List<Recipe> currentDayNameRecipes = new ArrayList<>();
+        List<RecipePlan> currentDayMeals = new ArrayList<>();
+        List<Recipe> currentDayRecipes = new ArrayList<>();
 
-        for (RecipePlan recipePlan : recipePlans) {
+        for (RecipePlan recipePlan : recipePlanList) {
             int currentDayNameId = recipePlan.getDayNameId();
             if (dayNameId != currentDayNameId) {
-                latestPlanDays.add(dayNameDao.read(recipePlan.getDayNameId()));
-                currentDayNameRecipes = new ArrayList<>();
-                currentDayNameMeals = new ArrayList<>();
-                latestPlanMeals.add(currentDayNameMeals);
-                latestPlanRecipes.add(currentDayNameRecipes);
+                planDays.add(dayNameDao.read(recipePlan.getDayNameId()));
+                currentDayRecipes = new ArrayList<>();
+                currentDayMeals = new ArrayList<>();
+                planMeals.add(currentDayMeals);
+                planRecipes.add(currentDayRecipes);
             }
-            currentDayNameMeals.add(recipePlan);
-            currentDayNameRecipes.add(recipeDao.read(recipePlan.getRecipeId()));
+            currentDayMeals.add(recipePlan);
+            currentDayRecipes.add(recipeDao.read(recipePlan.getRecipeId()));
             dayNameId = currentDayNameId;
         }
 
-        request.setAttribute("plansCount", plansCount);
-        request.setAttribute("recipeCount", recipeCount);
-        request.setAttribute("latestPlanName", latestPlanName);
-        request.setAttribute("latestPlanDays", latestPlanDays);
-        request.setAttribute("latestPlanMeals", latestPlanMeals);
-        request.setAttribute("latestPlanRecipes", latestPlanRecipes);
-        getServletContext().getRequestDispatcher("/dashboard.jsp")
-                .forward(request, response);
+        request.setAttribute("planExists", planExists);
+        request.setAttribute("plan", plan);
+        request.setAttribute("planDays", planDays);
+        request.setAttribute("planMeals", planMeals);
+        request.setAttribute("planRecipes", planRecipes);
     }
 }
