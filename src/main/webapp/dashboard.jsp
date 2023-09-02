@@ -11,6 +11,7 @@
 <%@ include file="head.jsp" %>
 
 <body>
+
 <%@ include file="headerAdmin.jsp" %>
 
 <section class="dashboard-section">
