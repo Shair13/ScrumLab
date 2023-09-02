@@ -21,7 +21,8 @@
                         <h3 class="color-header text-uppercase">DODAJ PRZEPIS DO PLANU</h3>
                     </div>
                     <div class="col d-flex justify-content-end mb-2 noPadding">
-                        <a href="#" class="btn btn-success rounded-0 pt-0 pb-0 pr-4 pl-4" id="submitButton">Zapisz</a>
+                        <a href="#" class="btn btn-success rounded-1 pt-0 pb-0 pr-4 pl-4" onclick="document.getElementById('addForm').submit();">Zapisz</a>
+                        <a href="#" class="btn btn-success rounded-1 pt-0 pb-0 pr-4 pl-4 ml-1" id = "cancel" >Anuluj</a>
                     </div>
                 </div>
 
@@ -31,7 +32,7 @@
                             <label for="choosePlan" class="col-sm-2 label-size col-form-label">
                                 Wybierz plan
                             </label>
-                            <div class="col-sm-3">
+                            <div class="col-sm-5">
                                 <select class="form-control" id="choosePlan" name="recipePlanPlanId">
                                     <c:forEach items="${plans}" var="plan">
                                         <option value="${plan.id}">${plan.name}</option>
@@ -43,7 +44,7 @@
                             <label for="name" class="col-sm-2 label-size col-form-label">
                                 Nazwa posiłku
                             </label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-5">
                                 <input type="text" class="form-control" value="" id="name" placeholder="Nazwa posiłku" name="recipePlanMealName">
                             </div>
                         </div>
@@ -51,7 +52,7 @@
                             <label for="number" class="col-sm-2 label-size col-form-label">
                                 Numer posiłku
                             </label>
-                            <div class="col-sm-2">
+                            <div class="col-sm-5">
                                 <input type="text" class="form-control" value="" id="number" placeholder="Numer posiłki" name="recipePlanDisplayOrder">
                             </div>
                         </div>
@@ -59,7 +60,7 @@
                             <label for="recipie" class="col-sm-2 label-size col-form-label">
                                 Przepis
                             </label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                                 <select class="form-control" id="recipie" name="recipePlanRecipeId">
                                     <c:forEach items="${recipes}" var="recipe">
                                         <option value="${recipe.id}">${recipe.name}</option>
@@ -71,7 +72,7 @@
                             <label for="day" class="col-sm-2 label-size col-form-label">
                                 Dzień
                             </label>
-                            <div class="col-sm-2">
+                            <div class="col-sm-5">
                                 <select class="form-control" id="day" name="recipePlanDayNameId">
                                     <c:forEach items="${days}" var="day">
                                         <option value="${day.id}">${day.name}</option>
@@ -90,6 +91,13 @@
     </div>
 </section>
 
+
+// Obsługa przycisku "Cancel"
+<script>
+    document.getElementById("cancel").addEventListener("click", function() {
+        window.location.href = "/app/dashboard";
+    });
+</script>
 <script src="/js/addRecipeToPlanValidation.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
