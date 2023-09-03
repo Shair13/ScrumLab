@@ -17,7 +17,7 @@ public class RecipePlanDao {
     private static final String FIND_ALL_RECIPE_PLAN_BY_PLAN_QUERY = """
             SELECT recipe_plan.*
             FROM recipe_plan
-                                 JOIN day_name on day_name.id = day_name_id
+                     JOIN day_name on day_name.id = day_name_id
                      JOIN plan on recipe_plan.plan_id = plan.id
             WHERE plan.id = ?
             ORDER BY day_name.display_order, recipe_plan.display_order;
@@ -27,9 +27,11 @@ public class RecipePlanDao {
             FROM recipe_plan
                      JOIN day_name on day_name.id = day_name_id
                      JOIN recipe on recipe.id = recipe_id
-            WHERE recipe_plan.plan_id = (SELECT MAX(id)
-                                         FROM plan
-                                         WHERE admin_id = ?)
+            WHERE recipe_plan.plan_id = (SELECT MAX(plan.id)
+                                         FROM recipe_plan
+                                                  JOIN plan on recipe_plan.plan_id = plan.id
+                                         WHERE admin_id = ?
+                                         ORDER BY plan.id)
             ORDER BY day_name.display_order, recipe_plan.display_order;
             """;
 

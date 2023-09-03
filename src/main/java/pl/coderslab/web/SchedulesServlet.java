@@ -19,7 +19,6 @@ public class SchedulesServlet extends HttpServlet {
         HttpSession session = request.getSession();
         PlanDao planDao = new PlanDao();
         Admin admin = (Admin) session.getAttribute("user");
-
         int adminId = admin.getId();
         List<Plan> plansList = planDao.findAllByAdmin(adminId);
         request.setAttribute("plansList", plansList);

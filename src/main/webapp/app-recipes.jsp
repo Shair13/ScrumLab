@@ -32,14 +32,16 @@
                     </tr>
                     </thead>
                     <tbody class="text-color-lighter">
+
                     <c:forEach items="${recipes}" var="recipe">
                         <tr class="d-flex">
-                            <th scope="row" class="col-1">${recipe.id}</th>
-                            <td class="col-2">${recipe.name}</td>
+                            <th id="recipeId" scope="row" class="col-1" >${recipe.id}</th>
+                            <td id="recipeName" class="col-2" >${recipe.name}</td>
                             <td class="col-7">${recipe.description}</td>
                             <td class="col-2 d-flex align-items-center justify-content-center flex-wrap">
-                                <a href="/app/recipe/delete?id=${recipe.id}"
-                                   class="btn btn-danger rounded-0 text-light m-1">Usuń</a>
+                                <a href="#" class="btn btn-danger rounded-0 text-light m-1" id="deleteButton"
+                                   data-toggle="modal"
+                                   data-target="#deleteMessage">Usuń</a>
                                 <a href="/app/recipe/details?id=${recipe.id}"
                                    class="btn btn-info rounded-0 text-light m-1">Szczegóły</a>
                                 <a href="/app/recipe/edit?id=${recipe.id}"
@@ -47,6 +49,31 @@
                             </td>
                         </tr>
                     </c:forEach>
+                    <div class="modal fade" id="deleteMessage" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Usuń przepis</h5>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Czy na pewno chcesz usunąć ten przepis?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Anuluj
+                                    </button>
+                                    <a href="/app/recipe/delete?recipeId="
+                                       class="btn btn-danger rounded-0 text-light m-1"
+                                       data-target="#deleteMessage">Usuń</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     </tbody>
                 </table>
             </div>
@@ -54,7 +81,7 @@
     </div>
 </section>
 
-
+<script src="plan/js/deleteRecipe.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

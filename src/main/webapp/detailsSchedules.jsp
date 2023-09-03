@@ -37,6 +37,7 @@
                                     Nazwa planu
                                 </span>
                             <div class="col-sm-10">
+                                <div id="planId" class="d-none">${plan.id}</div>
                                 <p class="schedules-text">${plan.name}</p>
                             </div>
                         </div>
@@ -69,10 +70,13 @@
                                     <tbody class="text-color-lighter">
                                     <c:forEach items="${planMeals[dayIdx]}" var="meal" varStatus="mealCounter">
                                         <tr class="d-flex">
-                                            <td class="col-2">${meal.mealName}</td>
+                                            <div id="recipePlanId" class="d-none">${meal.id}</div>
+                                            <td class="col-2" id="mealName">${meal.mealName}</td>
                                             <td class="col-7">${planRecipes[dayIdx][mealCounter.index].name} </td>
                                             <td class="col-1 center">
-                                                <a href="" class="btn btn-danger rounded-0 text-light m-1">Usuń</a>
+                                                <a href="#" class="btn btn-danger rounded-0 text-light m-1" id="deleteButton"
+                                                   data-toggle="modal"
+                                                   data-target="#deleteMessage">Usuń</a>
                                             </td>
                                             <td class="col-2 center">
                                                 <a href="/app/recipe/details?id=${planRecipes[dayIdx][mealCounter.index].id}"
@@ -91,21 +95,28 @@
                         </c:otherwise>
                     </c:choose>
 
-                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal fade" id="deleteMessage" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Usuń przepis z planu</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    ...
+                                    Czy na pewno chcesz usunąć ten plan?
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
+
+                                    <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Anuluj
+                                    </button>
+                                    <a href="/app/plan/details/delete?recipePlanId="
+                                       class="btn btn-danger rounded-0 text-light m-1"
+                                       data-target="#deleteMessage">Usuń</a>
+
                                 </div>
                             </div>
                         </div>
@@ -117,7 +128,7 @@
     </div>
 </section>
 
-
+<script src="js/deleteRecipePlan.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

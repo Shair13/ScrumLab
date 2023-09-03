@@ -11,9 +11,9 @@ import java.io.IOException;
 public class DeleteRecipeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
+        int recipeId = Integer.parseInt(request.getParameter("recipeId"));
         RecipeDao recipeDao = new RecipeDao();
-        recipeDao.delete(id);
+        recipeDao.delete(recipeId);
         response.sendRedirect("/app/recipes");
     }
     @Override
