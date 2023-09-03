@@ -68,10 +68,10 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <div class="modal-body">
+                                    <div class="modal-body" id="deleteMessageBody">
                                         Czy na pewno chcesz usunąć ten plan?
                                     </div>
-                                    <div class="modal-footer">
+                                    <div class="modal-footer" id="deleteMessageFooter">
                                         <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Anuluj
                                         </button>
