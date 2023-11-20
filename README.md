@@ -85,3 +85,9 @@ To change data, you can use the change data form.
 ![Edit Password](images/edit-password.png)
 
 To change the password, you can use the change password form.
+
+# Contact
+
+If you have any questions, feedback or issues, feel free to reach out to me:
+
+- Email: cezary.wozakowski@gmail.com
